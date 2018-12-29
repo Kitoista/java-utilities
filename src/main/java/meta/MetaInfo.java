@@ -1,4 +1,4 @@
-package meta.info;
+package meta;
 
 import java.util.ArrayList;
 import java.util.HashSet;
