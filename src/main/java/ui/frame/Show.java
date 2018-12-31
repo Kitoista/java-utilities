@@ -22,6 +22,7 @@ public class Show {
 	}
 	
 	private void init() {
+		frame.setName("Show");
 		frame.setLayout(new FlowLayout());
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(200, 300);
@@ -47,6 +48,7 @@ public class Show {
 	public void image(BufferedImage img) {
 		start();
 		content.add(new BufferedImageDisplayer().toComponent(img, null));
+		frame.setName("BufferedImage");
 		end();
 	}
 	
@@ -61,6 +63,7 @@ public class Show {
 	public void component(Component comp) {
 		start();
 		content.add(comp);
+		frame.setName(comp.getClass().getSimpleName());
 		end();
 	}
 	

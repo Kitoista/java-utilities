@@ -1,6 +1,8 @@
 package demo.testclasses;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test3 extends Test2 {
 
@@ -13,6 +15,7 @@ public class Test3 extends Test2 {
 	private boolean booleanMember;
 	private Test test;
 	private BufferedImage image;
+	private List<Object> list = new ArrayList<>();
 	
 	public Test3() {
 	}
@@ -82,6 +85,14 @@ public class Test3 extends Test2 {
 
 	public void setImage(BufferedImage image) {
 		this.image = image;
+	}
+
+	public List<Object> getList() {
+		return list;
+	}
+
+	public void setList(List<Object> list) {
+		this.list = list;
 	}
 	
 }

@@ -25,8 +25,8 @@ public abstract class BindedProperty<T> extends JPanel implements AutoCloseable 
 	
 	private Collection<PropertyChangedListener> listeners = new ArrayList<>();
 	
-	private Object lastValue = null;
-	private Object currentValue = null;
+	private T lastValue = null;
+	private T currentValue = null;
 	
 	protected BindedProperty(Property property, Object object) {
 		this.property = property;
@@ -67,6 +67,10 @@ public abstract class BindedProperty<T> extends JPanel implements AutoCloseable 
 	
 	protected T copy(T value) {
 		return value;
+	}
+	
+	protected boolean equalsThreadCheck(T a, T b) {
+		return Objects.equals(a, b);
 	}
 	
 	public static boolean canHandle(Class<?> type) {
@@ -127,14 +131,14 @@ public abstract class BindedProperty<T> extends JPanel implements AutoCloseable 
 						return;
 					}
 					lastValue = copy((T) property.get(object));
-					onMemChanged((T) lastValue);
+					onMemChanged(lastValue);
 					while (shouldMemThreadContinue()) {
 						Thread.sleep(memToUiPollTime);
 						currentValue = (T) property.get(object);
-						if (!Objects.equals(lastValue, currentValue) || objectChanged) {
+						if (!equalsThreadCheck(lastValue, currentValue) || objectChanged) {
 							objectChanged = false;
-							lastValue = currentValue;
-							onMemChanged((T) currentValue);
+							lastValue = copy(currentValue);
+							onMemChanged(currentValue);
 						}
 					}
 				} catch (IllegalArgumentException | ReflectiveOperationException e1) {

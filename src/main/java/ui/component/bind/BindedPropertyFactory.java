@@ -10,6 +10,7 @@ import meta.MetaMethods;
 import meta.Property;
 import ui.component.bind.imp.BindedBoolean;
 import ui.component.bind.imp.BindedBufferedImage;
+import ui.component.bind.imp.BindedCollection;
 import ui.component.bind.imp.BindedNumber;
 import ui.component.bind.imp.BindedObject;
 import ui.component.bind.imp.BindedString;
@@ -57,6 +58,7 @@ public class BindedPropertyFactory {
 			knownComponents.add(BindedNumber.class);
 			knownComponents.add(BindedBoolean.class);
 			knownComponents.add(BindedBufferedImage.class);
+			knownComponents.add(BindedCollection.class);
 		}
 		return knownComponents;
 	}

@@ -14,16 +14,22 @@ public class Frames {
 	
 	public static Dimension getFrameBorderSize() {
 		JFrame frame = new JFrame();
+		frame.setName("Frames.getFrameBorderSize");
 		frame.pack();
-		return getFrameBorderSize(frame);
+		Dimension re = getFrameBorderSize(frame);
+		frame.dispose();
+		return re;
 	}
 	
 	public static Dimension getMaximalizedSize() {
 		JFrame frame = new JFrame();
+		frame.setName("Frames.getMaximalizedSize");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		frame.setVisible(false);
-		return frame.getSize();
+		Dimension re = frame.getSize();
+		frame.dispose();
+		return re;
 	}
 
 }

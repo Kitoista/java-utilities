@@ -49,9 +49,6 @@ public class BindedBufferedImage extends BindedProperty<Object> {
 	protected void initGui() {
 		this.setLayout(new BorderLayout());
 		
-		show = new Show();
-		show.getFrame().setVisible(false);
-		
 		initPanels();
 		
 		label = new JLabel(property.getName());
@@ -100,6 +97,10 @@ public class BindedBufferedImage extends BindedProperty<Object> {
 	
 	private void onShow() {
 		if (object == null) return;
+		if (show == null) {
+			show = new Show();
+			show.getFrame().setVisible(false);
+		}
 		try {
 			BufferedImage img = (BufferedImage) property.get(object);
 			if (img != null) {
@@ -129,7 +130,7 @@ public class BindedBufferedImage extends BindedProperty<Object> {
 	}
 	
 	public static boolean canHandle(Class<?> type) {
-		return type.isAssignableFrom(BufferedImage.class);
+		return BufferedImage.class.isAssignableFrom(type);
 	}
 	
 }

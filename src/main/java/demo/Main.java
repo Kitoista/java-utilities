@@ -3,18 +3,11 @@ package demo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import demo.testclasses.Test2;
 import demo.testclasses.Test3;
-import meta.MetaInfo;
-import meta.MetaMethods;
-import number.NumberParseException;
-import number.Numbers;
 import ui.component.bind.imp.ObjectComponent;
 import ui.frame.Frames;
 import ui.frame.Show;
@@ -22,7 +15,9 @@ import ui.frame.Show;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
-
+		
+		// new Show().component(new FrameHandler());
+		
 		System.out.println(Frames.getFrameBorderSize());
 		System.out.println(Frames.getMaximalizedSize());
 		
@@ -40,6 +35,14 @@ public class Main {
 			sleep(1000);
 			
 			bp.setObject(t1);
+			
+			for (int i = 0; i < 10; i++) {
+				t1.getList().add(i);
+				sleep(500);
+				System.out.println("added " + i);
+			}
+			t1.getList().add(t1);
+			
 			
 			sleep(1000);
 			
