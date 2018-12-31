@@ -3,7 +3,6 @@ package ui.component;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 public class FileChooser {
 
@@ -28,7 +27,7 @@ public class FileChooser {
 	public static File getFile() {
 		JFileChooser fChooser = getInstance();
 		fChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int res = fChooser.showOpenDialog(new JFrame());
+		int res = fChooser.showOpenDialog(null);
 		if (res == JFileChooser.APPROVE_OPTION) {
 			return fChooser.getSelectedFile();
 		}
@@ -38,7 +37,7 @@ public class FileChooser {
 	public static File getDirectory() {
 		JFileChooser fChooser = getInstance();
 		fChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int res = fChooser.showOpenDialog(new JFrame());
+		int res = fChooser.showOpenDialog(null);
 		if (res == JFileChooser.APPROVE_OPTION) {
 			return fChooser.getSelectedFile();
 		}
