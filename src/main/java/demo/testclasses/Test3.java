@@ -1,8 +1,13 @@
 package demo.testclasses;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 public class Test3 extends Test2 {
 
@@ -14,8 +19,8 @@ public class Test3 extends Test2 {
 	private double doubleMember;
 	private boolean booleanMember;
 	private Test test;
-	private BufferedImage image;
-	private List<Object> list = new ArrayList<>();
+	private transient BufferedImage image;
+	private List<Integer> list = new ArrayList<>();
 	
 	public Test3() {
 	}
@@ -28,12 +33,50 @@ public class Test3 extends Test2 {
 		test = e;
 	}
 	
+	
+	// methods
+	
+	
 	public void asd2(int a, String b) {
 	}
+	
+	
+	public void nyomi() {
+	}
+	
+	
+	// static methods
+	
 	
 	public static void staticMethod() {
 		System.out.println("Test3");
 	}
+	
+	
+	// orverrides
+	
+	
+	public String toString() {
+		return "easyToSet: " + easyToSet + "\n" + "mediumToSet: " + mediumToSet + "\n" + "impossibleToSet: " + impossibleToSet; 
+	}
+
+	
+	// basic IO
+	
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        ImageIO.write(image, "png", out); // png is lossless
+    }
+	
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        image = ImageIO.read(in);
+    }
+	
+	
+	// getters setters XXX
+	
 	
 	public void setMediumToSet(int mediumToSet) {
 		this.mediumToSet = mediumToSet;
@@ -48,10 +91,6 @@ public class Test3 extends Test2 {
 		return mediumToSet;
 	}
 	
-	public String toString() {
-		return "easyToSet: " + easyToSet + "\n" + "mediumToSet: " + mediumToSet + "\n" + "impossibleToSet: " + impossibleToSet; 
-	}
-
 	public Test getTest() {
 		return test;
 	}
@@ -60,9 +99,6 @@ public class Test3 extends Test2 {
 		this.test = test;
 	}
 	
-	public void nyomi() {
-	}
-
 	public double getDoubleMember() {
 		return doubleMember;
 	}
@@ -87,11 +123,11 @@ public class Test3 extends Test2 {
 		this.image = image;
 	}
 
-	public List<Object> getList() {
+	public List<Integer> getList() {
 		return list;
 	}
 
-	public void setList(List<Object> list) {
+	public void setList(List<Integer> list) {
 		this.list = list;
 	}
 	

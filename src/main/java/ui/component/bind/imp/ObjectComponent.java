@@ -65,8 +65,8 @@ public class ObjectComponent extends JPanel implements AutoCloseable {
 		center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
 	}
 	
-	public Collection<BindedProperty<?>> getBindedProps() {
-		return bindedProps.values();
+	public Map<String, BindedProperty<?>> getBindedProps() {
+		return bindedProps;
 	}
 
 	@Override

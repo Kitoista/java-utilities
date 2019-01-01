@@ -21,6 +21,7 @@ import geometry.Positioner;
 import meta.Property;
 import ui.component.Components;
 import ui.component.bind.BindedProperty;
+import ui.component.bind.ObjectConstructor;
 import ui.frame.Frames;
 import ui.frame.Show;
 
@@ -31,18 +32,22 @@ import ui.frame.Show;
  * Can detect == equality and size changes.<br/>
  * Can not detect contained object changes.
  */
-public class BindedCollection extends BindedProperty<Collection<?>> {
+public class BindedCollection<T> extends BindedProperty<Collection<T>> {
 
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel center;
 	private JPanel north;
+	private JPanel south;
 	private Map<Object, JPanel> objectCompomponents = new HashMap<>();
 	
-	private JButton expandBtn;
+	protected JButton expandBtn;
+	protected JButton newBtn;
 	private int lastSize = 0;
 	
 	private boolean isExpanded = false;
+	
+	private ObjectConstructor<T> constructor;
 	
 	protected BindedCollection(Property property, Object object) {
 		super(property, object);
@@ -64,7 +69,24 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 				expand();
 			}
 		});
+				
+		newBtn = new JButton("new");
+		newBtn.setFocusPainted(false);
+		newBtn.addActionListener(e -> {
+			if (object == null) return;
+			try {
+				@SuppressWarnings("unchecked")
+				Collection<T> coll = (Collection<T>) property.get(object);
+				if (coll == null) return;
+				coll.add(constructor.construct());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+		});
+		newBtn.setEnabled(false);
 		
+		south.add(newBtn);
 		north.add(expandBtn, BorderLayout.WEST);
 		north.add(new JLabel(property.getName()), BorderLayout.CENTER);
 	}
@@ -72,12 +94,14 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 	private void initPanels() {
 		center = new JPanel();
 		north = new JPanel();
+		south = new JPanel();
 		
 		center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
 		north.setLayout(new BorderLayout());
 		
 		this.add(center, BorderLayout.CENTER);
 		this.add(north, BorderLayout.NORTH);
+		this.add(south, BorderLayout.SOUTH);
 	}
 	
 	private void expand() {
@@ -172,7 +196,7 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 	}
 	
 	@Override
-	protected boolean equalsThreadCheck(Collection<?> a, Collection<?> b) {
+	protected boolean equalsThreadCheck(Collection<T> a, Collection<T> b) {
 		boolean sizeChanged = false;
 		if (b != null && b.size() != lastSize) {
 			lastSize = b.size();
@@ -183,6 +207,19 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 	
 	public static boolean canHandle(Class<?> type) {
 		return (Collection.class.isAssignableFrom(type));
+	}
+	
+	
+	// getters, setters XXX
+	
+	
+	public ObjectConstructor<?> getConstructor() {
+		return constructor;
+	}
+	
+	public void setConstructor(ObjectConstructor<T> constructor) {
+		newBtn.setEnabled(constructor != null);
+		this.constructor = constructor;
 	}
 	
 }
