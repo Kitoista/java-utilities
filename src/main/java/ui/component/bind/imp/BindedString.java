@@ -9,6 +9,8 @@ import javax.swing.event.DocumentListener;
 
 import meta.Property;
 import ui.component.bind.BindedProperty;
+import ui.defaults.KLabel;
+import ui.defaults.KTextField;
 
 public class BindedString extends BindedProperty<Object> {
 
@@ -24,9 +26,9 @@ public class BindedString extends BindedProperty<Object> {
 	
 	@Override
 	protected void initGui() {
-		label = new JLabel(property.getName());
+		label = new KLabel(property.getName());
 		try {
-			textField1 = new JTextField((object == null || property == null || property.get(object) == null) ? "" : property.get(object) + "");
+			textField1 = new KTextField((object == null || property == null || property.get(object) == null) ? "" : property.get(object) + "");
 			textField1.getDocument().addDocumentListener(new DocumentListener() {
 
 				@Override
@@ -50,7 +52,7 @@ public class BindedString extends BindedProperty<Object> {
 		}
 		textField1.setColumns(20);
 		textField1.setEnabled(property.hasSet());
-		error = new JLabel();
+		error = new KLabel();
 		error.setForeground(Color.red);
 		this.add(label);
 		this.add(textField1);

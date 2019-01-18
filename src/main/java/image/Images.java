@@ -10,6 +10,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import ui.defaults.UI;
+
 public class Images {
 
 	public static BufferedImage resize(BufferedImage img, Dimension size) {
@@ -43,8 +45,8 @@ public class Images {
 	
 	public static JLabel placeholderComponent(Dimension size, String text) {
 		JLabel re = new JLabel((text == null) ? size.width + " x " + size.height : text, SwingConstants.CENTER);
-		re.setBorder(BorderFactory.createLineBorder(Color.gray));
-		re.setForeground(Color.gray);
+		re.setBorder(BorderFactory.createLineBorder(UI.fillColor));
+		re.setForeground(UI.fontColor);
 		re.setSize(size);
 		re.setPreferredSize(size);
 		return re;

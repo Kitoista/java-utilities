@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import image.Images;
+import ui.defaults.KLabel;
 
 public class BufferedImageDisplayer implements ObjectDisplayer, CollectionDisplayer {
 
@@ -22,7 +23,7 @@ public class BufferedImageDisplayer implements ObjectDisplayer, CollectionDispla
 		if (size != null) {
 			img = Images.resize(img, size);
 		}
-		JLabel label = new JLabel();
+		JLabel label = new KLabel();
 		if (img != null) {
 			label.setIcon(new ImageIcon(img));
 			label.setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));

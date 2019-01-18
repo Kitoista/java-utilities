@@ -24,6 +24,9 @@ import ui.component.Components;
 import ui.component.FileChooser;
 import ui.component.bind.BindedProperty;
 import ui.component.converter.BufferedImageDisplayer;
+import ui.defaults.KButton;
+import ui.defaults.KLabel;
+import ui.defaults.KPanel;
 import ui.frame.Frames;
 import ui.frame.Show;
 
@@ -57,10 +60,10 @@ public class BindedBufferedImage extends BindedProperty<Object> {
 		
 		initPanels();
 		
-		label = new JLabel(property.getName());
-		showBtn = new JButton("show");
-		saveBtn = new JButton("save");
-		loadBtn = new JButton("load");
+		label = new KLabel(property.getName());
+		showBtn = new KButton("show");
+		saveBtn = new KButton("save");
+		loadBtn = new KButton("load");
 		
 		showBtn.addActionListener(e -> onShow());
 		saveBtn.addActionListener(e -> onSave());
@@ -77,9 +80,9 @@ public class BindedBufferedImage extends BindedProperty<Object> {
 	}
 	
 	private void initPanels() {
-		center = new JPanel();
-		west = new JPanel();
-		east = new JPanel();
+		center = new KPanel();
+		west = new KPanel();
+		east = new KPanel();
 		
 		this.add(center, BorderLayout.CENTER);
 		this.add(west, BorderLayout.WEST);

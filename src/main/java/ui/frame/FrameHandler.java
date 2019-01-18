@@ -3,10 +3,12 @@ package ui.frame;
 import java.awt.Frame;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-public class FrameHandler extends JPanel {
+import ui.defaults.KButton;
+import ui.defaults.KLabel;
+import ui.defaults.KPanel;
+
+public class FrameHandler extends KPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,8 +17,8 @@ public class FrameHandler extends JPanel {
 	}
 	
 	public void init() {
-		add(new JLabel("FrameHandler"));
-		JButton list = new JButton("List");
+		add(new KLabel("FrameHandler"));
+		JButton list = new KButton("List");
 		list.addActionListener(e -> {
 			for (Frame frame : Frame.getFrames()) {
 				System.out.println(frame);
@@ -25,7 +27,7 @@ public class FrameHandler extends JPanel {
 		});
 		add(list);
 		
-		JButton showAll = new JButton("Show");
+		JButton showAll = new KButton("Show");
 		showAll.addActionListener(e -> {
 			for (Frame frame : Frame.getFrames()) {
 				frame.setVisible(true);

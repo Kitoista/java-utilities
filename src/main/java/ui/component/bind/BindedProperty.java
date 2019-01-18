@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-import javax.swing.JPanel;
-
 import meta.Property;
 import ui.component.bind.exception.UnableToHandleTypeException;
+import ui.defaults.KPanel;
 
-public abstract class BindedProperty<T> extends JPanel implements AutoCloseable {
+public abstract class BindedProperty<T> extends KPanel implements AutoCloseable {
 
 	private static final long serialVersionUID = 1L;
 	private static final int memToUiPollTime = 100;

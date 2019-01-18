@@ -4,12 +4,11 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.util.Collection;
 
-import javax.swing.JPanel;
-
 import ui.component.converter.CollectionDisplayer;
 import ui.component.converter.ObjectDisplayer;
+import ui.defaults.KPanel;
 
-public class ComponentsPanel extends JPanel {
+public class ComponentsPanel extends KPanel {
 
 	private static final long serialVersionUID = 1L;
 

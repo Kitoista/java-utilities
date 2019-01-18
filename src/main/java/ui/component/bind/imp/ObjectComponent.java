@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import meta.Property;
 import ui.component.bind.BindedProperty;
 import ui.component.bind.BindedPropertyFactory;
+import ui.defaults.KLabel;
+import ui.defaults.KPanel;
 
 public class ObjectComponent extends JPanel implements AutoCloseable {
 
@@ -50,13 +52,13 @@ public class ObjectComponent extends JPanel implements AutoCloseable {
 	private void initGui() {
 		this.setLayout(new BorderLayout());
 
-		JPanel center = new JPanel();
-		JPanel north = new JPanel();
+		JPanel center = new KPanel();
+		JPanel north = new KPanel();
 		
 		this.add(north, BorderLayout.NORTH);
 		this.add(center, BorderLayout.CENTER);
 		
-		label = new JLabel(type.getSimpleName());
+		label = new KLabel(type.getSimpleName());
 		north.add(label);
 		
 		for (String key : bindedProps.keySet()) {

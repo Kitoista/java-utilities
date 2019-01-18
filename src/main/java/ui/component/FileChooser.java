@@ -4,6 +4,8 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import ui.defaults.KFileChooser;
+
 public class FileChooser {
 
 	private static JFileChooser instance;
@@ -47,7 +49,7 @@ public class FileChooser {
 	
 	public static JFileChooser getInstance() {
 		if (instance == null) {
-			instance = new JFileChooser();
+			instance = new KFileChooser();
 		}
 		return instance;
 	}

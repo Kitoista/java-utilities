@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import geometry.Dimensions;
+import ui.defaults.KFrame;
 
 public class Frames {
 
@@ -13,7 +14,7 @@ public class Frames {
 	}
 	
 	public static Dimension getFrameBorderSize() {
-		JFrame frame = new JFrame();
+		JFrame frame = new KFrame();
 		frame.setName("Frames.getFrameBorderSize");
 		frame.pack();
 		Dimension re = getFrameBorderSize(frame);

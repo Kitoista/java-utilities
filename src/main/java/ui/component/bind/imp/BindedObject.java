@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 
 import meta.Property;
 import ui.component.bind.BindedProperty;
+import ui.defaults.KButton;
+import ui.defaults.KLabel;
 
 public class BindedObject extends BindedProperty<Object> {
 
@@ -18,8 +20,8 @@ public class BindedObject extends BindedProperty<Object> {
 	
 	@Override
 	protected void initGui() {
-		label = new JLabel(property.getName());
-		changeButton = new JButton("can't change");
+		label = new KLabel(property.getName());
+		changeButton = new KButton("can't change");
 		changeButton.setEnabled(false);
 		this.add(label);
 		this.add(changeButton);

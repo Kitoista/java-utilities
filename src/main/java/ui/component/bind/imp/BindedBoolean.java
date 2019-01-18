@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 
 import meta.Property;
 import ui.component.bind.BindedProperty;
+import ui.defaults.KCheckBox;
+import ui.defaults.KLabel;
 
 public class BindedBoolean extends BindedProperty<Object> {
 
@@ -19,9 +21,9 @@ public class BindedBoolean extends BindedProperty<Object> {
 	
 	@Override
 	protected void initGui() {
-		label = new JLabel(property.getName());
+		label = new KLabel(property.getName());
 		try {
-			checkBox1 = new JCheckBox();
+			checkBox1 = new KCheckBox();
 			checkBox1.setSelected((object == null || property == null || property.get(object) == null) ? false : (boolean) property.get(object));
 			checkBox1.addActionListener(e -> {
 				callOnGuiChanged();

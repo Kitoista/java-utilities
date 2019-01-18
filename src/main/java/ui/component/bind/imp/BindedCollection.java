@@ -14,13 +14,15 @@ import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import geometry.Positioner;
 import meta.Property;
 import ui.component.Components;
 import ui.component.bind.BindedProperty;
+import ui.defaults.KButton;
+import ui.defaults.KLabel;
+import ui.defaults.KPanel;
 import ui.frame.Frames;
 import ui.frame.Show;
 
@@ -66,12 +68,12 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 		});
 		
 		north.add(expandBtn, BorderLayout.WEST);
-		north.add(new JLabel(property.getName()), BorderLayout.CENTER);
+		north.add(new KLabel(property.getName()), BorderLayout.CENTER);
 	}
 	
 	private void initPanels() {
-		center = new JPanel();
-		north = new JPanel();
+		center = new KPanel();
+		north = new KPanel();
 		
 		center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
 		north.setLayout(new BorderLayout());
@@ -130,12 +132,12 @@ public class BindedCollection extends BindedProperty<Collection<?>> {
 	}
 	
 	protected JPanel createEntry(Object object) {
-		JPanel re = new JPanel();
-		JButton showBtn = new JButton("show");
+		JPanel re = new KPanel();
+		JButton showBtn = new KButton("show");
 		showBtn.addActionListener(e -> {
 			onShowEntry(object);
 		});
-		re.add(new JLabel(object.getClass().getSimpleName()));
+		re.add(new KLabel(object.getClass().getSimpleName()));
 		re.add(showBtn);
 		return re;
 	}

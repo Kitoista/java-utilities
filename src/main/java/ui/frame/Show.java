@@ -8,14 +8,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import ui.component.converter.BufferedImageDisplayer;
+import ui.defaults.KFrame;
+import ui.defaults.KPanel;
 
 public class Show {
 
-	private JFrame frame = new JFrame();
-	private JPanel content = new JPanel();
+	private JFrame frame = new KFrame();
+	private KPanel content = new KPanel();
 	
 	public Show() {
 		init();
