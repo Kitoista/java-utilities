@@ -1,9 +1,13 @@
 package meta;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 import string.Strings;
 
@@ -31,15 +35,24 @@ public class MetaMethods {
 	
 	public static Collection<Property> getProperties(Class<?> c) {
 		Collection<Property> re = new ArrayList<>();
+		Collection<String> names = new HashSet<>();
 		Collection<Method> getters = getGetters(c);
 		for (Method method : getters) {
-			re.add(new Property(c, toFieldName(method.getName()), method.getReturnType()));
+			Property prop = new Property(c, toFieldName(method.getName()), method.getReturnType());
+			re.add(prop);
+			names.add(prop.getName());
 		}
 		Collection<Method> setters = getSetters(c);
 		for (Method method : setters) {
 			Property prop = new Property(c, toFieldName(method.getName()), method.getParameters()[0].getType());
 			if (!re.contains(prop)) {
 				re.add(prop);
+				names.add(prop.getName());
+			}
+		}
+		for (Field field : c.getFields()) {
+			if (!names.contains(field.getName())) {
+				re.add(new Property(c, field.getName(), field.getType()));
 			}
 		}
 		return re;
@@ -98,14 +111,17 @@ public class MetaMethods {
 		return null;
 	}
 	
-	public static Constructor<?> getConstructor(Class<?> c, Class<?>... params) {
+	public static Constructor<?> getConstructor(Class<?> c, Class<?>... inputParams) {
 		for (Constructor<?> constructor : c.getDeclaredConstructors()) {
 			Class<?>[] paramTypes = constructor.getParameterTypes();
-			if (paramTypes.length == params.length) {
+			if (paramTypes.length == inputParams.length) {
 				boolean isGood = true;
 				int i = 0;
-				for (Class<?> paramType : params) {
-					if (!paramTypes[i].isAssignableFrom(paramType)) {
+				for (Class<?> paramType : paramTypes) {
+					boolean paramTypeIsObject = !MetaInfo.isPrimitive(inputParams[i]);
+					boolean primitiveNull = paramType == null && MetaInfo.isPrimitive(inputParams[i]);
+					boolean notAssignableObject = !inputParams[i].isAssignableFrom(paramType) && paramTypeIsObject; 
+					if (primitiveNull || notAssignableObject) {
 						isGood = false;
 						break;
 					}
@@ -117,6 +133,41 @@ public class MetaMethods {
 			}
 		}
 		return null;
+	}
+	
+	public static Constructor<?> getConstructor(Class<?> c, Object... args) {
+		Class<?>[] params = new Class<?>[args.length];
+		for (int i = 0; i < args.length; i++) {
+			if (args[i] == null) {
+				params[i] = null;
+			}
+			params[i] = args[i].getClass();
+		}
+		return getConstructor(c, params);
+	}
+	
+	public static Object newInstance(Class<?> c, Object... args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Constructor<?> constructor = getConstructor(c, args);
+		if (constructor == null) {
+			throw new IllegalArgumentException("There is no constructor with params: " + Arrays.toString(args));
+		}
+		return constructor.newInstance(args);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> ObjectConstructor<T> generateDefaultObjectConstructor(Class<T> type) {
+		return args -> {
+			try {
+				return (T) newInstance(type, args);
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				System.err.println("An error happened while trying to construct a " + type.getName());
+				System.err.println("Given arguments: " + Arrays.toString(args));
+				System.err.println("Found constructor: " + getConstructor(type, args));
+				e.printStackTrace();
+			}
+			return null;
+		};
 	}
 	
 }

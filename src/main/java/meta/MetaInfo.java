@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class MetaInfo {
 	
+	private static Class<?>[] primitives = { boolean.class, byte.class, char.class, short.class, int.class, long.class, float.class, double.class };
+	
 	public static Set<Class<?>> getDeepInterfaces(Class<?> c) {
 		return getDeepInterfaces(c, new HashSet<Class<?>>());
 	}
@@ -33,4 +35,24 @@ public class MetaInfo {
 		return getSuperClasses(c.getSuperclass(), re);
 	}
 	
+	public static Class<?> toPrimitive(Class<?> c) {
+		if (Boolean.class.equals(c)) return boolean.class;
+		if (Byte.class.equals(c)) return byte.class;
+		if (Character.class.equals(c)) return char.class;
+		if (Short.class.equals(c)) return short.class;
+		if (Integer.class.equals(c)) return int.class;
+		if (Long.class.equals(c)) return long.class;
+		if (Float.class.equals(c)) return float.class;
+		if (Double.class.equals(c)) return double.class;
+		return null;
+	}
+	
+	public static boolean isPrimitive(Class<?> c) {
+		for (Class<?> class1 : primitives) {
+			if (class1.equals(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

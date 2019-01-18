@@ -1,6 +1,8 @@
 package meta;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 
 public class Property {
@@ -8,9 +10,10 @@ public class Property {
 	private Class<?> owner;
 	private Class<?> type;
 	private String name;
-
+	
 	private Method get;
 	private Method set;
+	private Field field;
 	
 	public Property(Class<?> owner, String name, Class<?> type) {
 		this.owner = owner;
@@ -18,18 +21,35 @@ public class Property {
 		this.type = type;
 		this.get = MetaMethods.getGetter(owner, name);
 		this.set = MetaMethods.getSetter(owner, name, type);
+		try {
+			this.field = owner.getField(name);
+			if (field != null && !Modifier.isPublic(field.getModifiers())) {
+				field = null;
+			}
+		} catch (NoSuchFieldException | SecurityException e) {
+		}
 	}
 	
 	public Object get(Object object) throws IllegalArgumentException, ReflectiveOperationException {
 		if (get == null) {
-			throw new ReflectiveOperationException("There is no get method");
+			if (field == null) {
+				if ("this".equals(name)) {
+					return object;
+				}
+				throw new ReflectiveOperationException("There is no get method");
+			}
+			return field.get(object);
 		}
 		return get.invoke(object);
 	}
 	
 	public Object set(Object object, Object value) throws IllegalArgumentException, ReflectiveOperationException {
 		if (set == null) {
-			throw new ReflectiveOperationException("There is no set method");
+			if (field == null) {
+				throw new ReflectiveOperationException("There is no set method");
+			}
+			field.set(object, value);
+			return value;
 		}
 		return set.invoke(object, value);
 	}
@@ -47,11 +67,11 @@ public class Property {
 	}
 	
 	public boolean hasGet() {
-		return get != null;
+		return get != null || field != null || !"this".equals(name);
 	}
 	
 	public boolean hasSet() {
-		return set != null;
+		return set != null || field != null;
 	}
 	
 	public static Collection<Property> getProperties(Class<?> obj) {
