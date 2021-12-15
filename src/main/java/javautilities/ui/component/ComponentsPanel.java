@@ -4,8 +4,8 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.util.Collection;
 
-import javautilities.ui.component.converter.CollectionDisplayer;
-import javautilities.ui.component.converter.ObjectDisplayer;
+import javautilities.ui.component.displayer.CollectionDisplayer;
+import javautilities.ui.component.displayer.ObjectDisplayer;
 import javautilities.ui.defaults.KPanel;
 
 public class ComponentsPanel extends KPanel {

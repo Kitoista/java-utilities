@@ -1,0 +1,15 @@
+# lines starting with # are considered as comments
+# empty lines are safe as well
+# if you don't set a value, then the default will be used 
+# remove the # from the lines you want to set
+# "Time" and "Interval" values are in milliseconds
+# "Pos" expects 2 numbers: x and y coordinates where the program will click
+
+# activeTime 1800000
+# fakeTime 1800000
+
+# activeInterval 5000
+# fakeInterval 300000
+
+# spinPos 1250 500
+# xPos 1300 275

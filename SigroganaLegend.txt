@@ -1,0 +1,26 @@
+# lines starting with # are considered as comments
+# empty lines are safe as well
+# if you don't set a value, then the default will be used 
+# remove the # from the lines you want to set
+
+# "vertical" "horizontal" "diagonal" expects 2 numbers: x and y coordinates where the program will click
+# ^ for these you can use my mouse tracker!
+
+# Top position of the line
+vertical 470 400
+
+# Left position of the line
+horizontal 350 492
+
+# Top left position of the line
+diagonal 350 420
+
+# This is how fast it draws the line (in milliseconds)
+time 500
+
+# This is how detailed the mouse moves (don't set it to 0)
+mouseSteps 50
+
+verticalVector -30 240
+horizontalVector 250 30
+diagonalVector 190 190

@@ -5,10 +5,12 @@ import java.awt.GraphicsDevice;
 import java.awt.Point;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Robot extends java.awt.Robot {
 
-	public static final int TYPE_DELAY = 100;
+	public static int TYPE_DELAY = 100;
 	public static final int DOUBLE_CLICK_DELAY = 100;
 	
 	private static final String OS = System.getProperty("os.name").toLowerCase();
@@ -39,6 +41,49 @@ public class Robot extends java.awt.Robot {
 
 	public void clickOn(Point point) {
 		clickOn(point.x, point.y);
+	}
+	
+	public List<Point> interpolate(Point a, Point b, int steps) {
+		List<Point> re = new ArrayList<>();
+		Point diff = new Point(b.x - a.x, b.y - a.y);
+		for (float i = 0; i < steps; ++i) {
+			float eb = i / steps;
+			float ea = 1 - eb;
+			re.add(new Point((int) (ea * a.x + eb * b.x), (int) (ea * a.y + eb * b.y)));
+		}
+		
+		return re;
+	}
+	
+	public void mouseInterpolate(Point a, Point b, int time, int steps) {
+		List<Point> points = interpolate(a, b, steps);
+
+		int delayTime = time / steps;
+		
+		for (Point point : points) {
+			mouseMove(point.x, point.y);
+			delay(delayTime);
+		}
+	}
+	
+	public void drag(Point a, Point b) {
+		drag(a, b, 50, 50);
+	}
+	
+	public void drag(Point a, Point b, int time) {
+		drag(a, b, time, 50);
+	}
+	
+	public void drag(Point a, Point b, int time, int steps) {
+		mouseRelease(InputEvent.BUTTON1_MASK);
+		delay(50);
+		mouseMove(a.x, a.y);
+		delay(50);
+		mousePress(InputEvent.BUTTON1_MASK);
+		
+		mouseInterpolate(a, b, time, steps);
+		
+		mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 	
 	public void type(String txt) {

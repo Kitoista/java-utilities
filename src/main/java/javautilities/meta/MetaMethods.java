@@ -111,6 +111,22 @@ public class MetaMethods {
 		return null;
 	}
 	
+	public static Object invokeMethod(Object self, String methodName, Object... objects) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+		Class<?>[] types = new Class<?>[objects.length];
+		for (int i = 0; i < objects.length; i++) {
+			types[i] = objects[i].getClass();
+			Class<?> primitive = MetaInfo.toPrimitive(types[i]);
+			if (primitive != null) {
+				types[i] = primitive;
+			}
+		}
+		Method method = MetaMethods.getMethod(self.getClass(), methodName, types);
+		if (method == null) {
+			throw new NoSuchMethodException();
+		}
+		return method.invoke(self, objects);
+	}
+	
 	public static Constructor<?> getConstructor(Class<?> c, Class<?>... inputParams) {
 		for (Constructor<?> constructor : c.getDeclaredConstructors()) {
 			Class<?>[] paramTypes = constructor.getParameterTypes();

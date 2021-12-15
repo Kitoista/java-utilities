@@ -1,4 +1,4 @@
-package javautilities.ui.component.converter;
+package javautilities.ui.component.displayer;
 
 import java.awt.Component;
 import java.awt.Dimension;

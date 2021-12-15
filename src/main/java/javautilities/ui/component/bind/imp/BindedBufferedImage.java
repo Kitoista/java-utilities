@@ -23,7 +23,7 @@ import javautilities.meta.Property;
 import javautilities.ui.component.Components;
 import javautilities.ui.component.FileChooser;
 import javautilities.ui.component.bind.BindedProperty;
-import javautilities.ui.component.converter.BufferedImageDisplayer;
+import javautilities.ui.component.displayer.BufferedImageDisplayer;
 import javautilities.ui.defaults.KButton;
 import javautilities.ui.defaults.KLabel;
 import javautilities.ui.defaults.KPanel;
