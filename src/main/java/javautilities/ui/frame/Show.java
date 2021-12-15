@@ -16,8 +16,9 @@ import javautilities.ui.defaults.KPanel;
 
 public class Show {
 
-	private JFrame frame = new JFrame();
-	private JPanel content = new JPanel();
+	private JFrame frame = new KFrame();
+	private KPanel content = new KPanel();
+	private Runnable beforeVisible;
 	
 	public Show() {
 		init();
@@ -80,5 +81,5 @@ public class Show {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
-	
+
 }

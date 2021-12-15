@@ -17,7 +17,7 @@ public class KTextArea extends JTextArea {
 	}
 	
 	private void init() {
-		setBackground(UI.fillColor);
+		setOpaque(false);
 		setForeground(UI.fontColor);
 		setFont(UI.normalFont);
 	}
